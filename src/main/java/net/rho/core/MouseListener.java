@@ -9,13 +9,15 @@ import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
 public class MouseListener {
 
-    private static MouseListener inst = null;
     private final boolean[] mouseButtonPressed = new boolean[3];
     private final MousePosCallBackWrapper mousePosCallBackWrapper;
     private final MouseButtonCallbackWrapper mouseButtonCallbackWrapper;
     private final MouseScrollCallBackWrapper mouseScrollCallBackWrapper;
     private double xPos, yPos, lastY, lastX, scrollX, scrollY;
     private boolean isDragging;
+
+
+    private static MouseListener inst = null;
 
 
     private MouseListener() {

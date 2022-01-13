@@ -8,9 +8,9 @@ import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 public class KeyListener implements GLFWKeyCallbackI {
 
 
-    private static KeyListener inst = null;
     private final boolean[] keyPressed = new boolean[350];
 
+    private static KeyListener inst = null;
 
     private KeyListener() {
 
