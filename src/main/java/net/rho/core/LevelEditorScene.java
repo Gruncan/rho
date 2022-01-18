@@ -1,6 +1,7 @@
 package net.rho.core;
 
 import net.rho.renderer.Shader;
+import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
@@ -16,9 +17,9 @@ public class LevelEditorScene extends Scene {
 
     private final float[] vertexArray = {
             // position                  colour (rgb)
-            0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, // Bottom right
-            -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, // Top left
-            0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, // Top right
+            100.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, // Bottom right
+            -0.5f, 100.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, // Top left
+            100.5f, 100.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, // Top right
             -0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, // Bottom left
     };
 
@@ -39,6 +40,7 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void init() {
+        super.camera = new Camera(new Vector2f());
         defaultShader = new Shader("assets/shaders/default.glsl");
         defaultShader.compile();
 
@@ -80,7 +82,10 @@ public class LevelEditorScene extends Scene {
     @Override
     public void update(float dt) {
 
+
         defaultShader.use();
+        defaultShader.uploadMat4f("uProjection", super.camera.getProjectionMatrix());
+        defaultShader.uploadMat4f("uView", super.camera.getViewMatrix());
         // Bind VAO
         glBindVertexArray(vaoID);
         //Enable vertex attribute pointers
