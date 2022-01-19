@@ -1,6 +1,7 @@
 package net.rho.core;
 
 import net.rho.renderer.Shader;
+import net.rho.renderer.Texture;
 import net.rho.util.Time;
 import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
@@ -18,10 +19,10 @@ public class LevelEditorScene extends Scene {
 
     private final float[] vertexArray = {
             // position                  colour (rgb)
-            100.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, // Bottom right
-            -0.5f, 100.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, // Top left
-            100.5f, 100.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, // Top right
-            -0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, // Bottom left
+            100.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,      1, 1,              // Bottom right
+            -0.5f, 100.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,      0, 0,              // Top left
+            100.5f, 100.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,     1, 0,              // Top right
+            -0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,       0, 1,              // Bottom left
     };
 
     // Counterclockwise order
@@ -33,6 +34,7 @@ public class LevelEditorScene extends Scene {
 
     private int vaoID, vboID, eboID;
     private Shader defaultShader;
+    private Texture testTexture;
 
     public LevelEditorScene() {
 
@@ -44,6 +46,7 @@ public class LevelEditorScene extends Scene {
         super.camera = new Camera(new Vector2f());
         defaultShader = new Shader("assets/shaders/default.glsl");
         defaultShader.compile();
+        this.testTexture = new Texture("assets/images/testImage.png");
 
         // Creating VAO, VBO, and EBO buffer objects
         vaoID = glGenVertexArrays();
@@ -69,23 +72,32 @@ public class LevelEditorScene extends Scene {
         // Add the vertex attribute pointers
         int positionsSize = 3;
         int colorSize = 4;
-        int floatSizeBytes = 4;
-        int vertexSizeBytes = (positionsSize + colorSize) * floatSizeBytes;
+        int uvSize = 2;
+        int vertexSizeBytes = (positionsSize + colorSize + uvSize) * Float.BYTES;
         glVertexAttribPointer(0, positionsSize, GL_FLOAT, false, vertexSizeBytes, 0);
         glEnableVertexAttribArray(0);
 
-        glVertexAttribPointer(1, colorSize, GL_FLOAT, false, vertexSizeBytes, positionsSize * floatSizeBytes);
+        glVertexAttribPointer(1, colorSize, GL_FLOAT, false, vertexSizeBytes, positionsSize * Float.BYTES);
         glEnableVertexAttribArray(1);
 
+        glVertexAttribPointer(2,uvSize, GL_FLOAT, false, vertexSizeBytes, (positionsSize + colorSize) * Float.BYTES);
+        glEnableVertexAttribArray(2);
 
     }
 
     @Override
     public void update(float dt) {
-        camera.position.x -= dt * 50f;
-        camera.position.y -= dt * 20f;
+//        camera.position.x -= dt * 50f;
+//        camera.position.y -= dt * 20f;
 
         defaultShader.use();
+
+        // Upload texture to shader
+        defaultShader.uploadTexture("TEX_SAMPLER", 0);
+        glActiveTexture(GL_TEXTURE0);
+        testTexture.bind();
+
+
         defaultShader.uploadMat4f("uProjection", super.camera.getProjectionMatrix());
         defaultShader.uploadMat4f("uView", super.camera.getViewMatrix());
         defaultShader.uploadFloat("uTime", Time.getTime());
