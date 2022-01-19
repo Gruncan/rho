@@ -1,6 +1,7 @@
 package net.rho.core;
 
 import net.rho.renderer.Shader;
+import net.rho.util.Time;
 import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
 
@@ -81,11 +82,13 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void update(float dt) {
-
+        camera.position.x -= dt * 50f;
+        camera.position.y -= dt * 20f;
 
         defaultShader.use();
         defaultShader.uploadMat4f("uProjection", super.camera.getProjectionMatrix());
         defaultShader.uploadMat4f("uView", super.camera.getViewMatrix());
+        defaultShader.uploadFloat("uTime", Time.getTime());
         // Bind VAO
         glBindVertexArray(vaoID);
         //Enable vertex attribute pointers
