@@ -2,6 +2,9 @@ package net.rho.core;
 
 import net.rho.renderer.Shader;
 import net.rho.renderer.Texture;
+import net.rho.renderer.components.ShaderHelper;
+import net.rho.renderer.components.Vertex;
+import net.rho.renderer.components.VertexArray;
 import net.rho.util.Time;
 import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
@@ -16,14 +19,14 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 public class LevelEditorScene extends Scene {
 
 
-
-    private final float[] vertexArray = {
-            // position                  colour (rgb)
-            100.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,      1, 1,              // Bottom right
-            -0.5f, 100.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,      0, 0,              // Top left
-            100.5f, 100.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,     1, 0,              // Top right
-            -0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,       0, 1,              // Bottom left
-    };
+//
+//    private final float[] vertexArray = {
+//            // position                  colour (rgb)         // UV coordinates
+//            100.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,      1, 1,              // Bottom right
+//            -0.5f, 100.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,      0, 0,              // Top left
+//            100.5f, 100.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,     1, 0,              // Top right
+//            -0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,       0, 1,              // Bottom left
+//    };
 
     // Counterclockwise order
     private final int[] elementArray = {
@@ -35,9 +38,14 @@ public class LevelEditorScene extends Scene {
     private int vaoID, vboID, eboID;
     private Shader defaultShader;
     private Texture testTexture;
+    private final VertexArray vertexArray;
 
     public LevelEditorScene() {
-
+        this.vertexArray = new VertexArray();
+        vertexArray.addVertex(new Vertex(100.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1, 1));
+        vertexArray.addVertex(new Vertex(-0.5f, 100.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0, 0));
+        vertexArray.addVertex(new Vertex(100.5f, 100.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,1, 0));
+        vertexArray.addVertex(new Vertex(-0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,0, 1));
     }
 
 
@@ -53,8 +61,8 @@ public class LevelEditorScene extends Scene {
         glBindVertexArray(vaoID);
 
         // Create a float buffer of vertices
-        FloatBuffer vertexBuffer = BufferUtils.createFloatBuffer(vertexArray.length);
-        vertexBuffer.put(vertexArray).flip();
+        FloatBuffer vertexBuffer = BufferUtils.createFloatBuffer(vertexArray.totalLength());
+        vertexBuffer.put(vertexArray.getArray()).flip();
 
         // Create VBO upload vertex buffer
         vboID = glGenBuffers();
@@ -69,19 +77,7 @@ public class LevelEditorScene extends Scene {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboID);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, elementBuffer, GL_STATIC_DRAW);
 
-        // Add the vertex attribute pointers
-        int positionsSize = 3;
-        int colorSize = 4;
-        int uvSize = 2;
-        int vertexSizeBytes = (positionsSize + colorSize + uvSize) * Float.BYTES;
-        glVertexAttribPointer(0, positionsSize, GL_FLOAT, false, vertexSizeBytes, 0);
-        glEnableVertexAttribArray(0);
-
-        glVertexAttribPointer(1, colorSize, GL_FLOAT, false, vertexSizeBytes, positionsSize * Float.BYTES);
-        glEnableVertexAttribArray(1);
-
-        glVertexAttribPointer(2,uvSize, GL_FLOAT, false, vertexSizeBytes, (positionsSize + colorSize) * Float.BYTES);
-        glEnableVertexAttribArray(2);
+        ShaderHelper.loadVertexes(vertexArray);
 
     }
 
