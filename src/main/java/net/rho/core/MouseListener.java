@@ -4,10 +4,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
 
-/**
- * Old version of MouseListener,
- * removed weird static usage in singleton
- */
+
 public class MouseListener {
 
     private static MouseListener inst = null;

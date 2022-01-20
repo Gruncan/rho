@@ -3,10 +3,6 @@ package net.rho.core;
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
-/**
- * Old version of KeyListener,
- * removed weird static usage in singleton
- */
 
 public class KeyListener {
 
