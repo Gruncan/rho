@@ -106,10 +106,10 @@ public class Window {
             throw new IllegalStateException("Failed to create the GLFW window.");
         }
 
-        glfwSetCursorPosCallback(glfwWindow, MouseListener.getInstance().getMousePosCallBack());
-        glfwSetMouseButtonCallback(glfwWindow, MouseListener.getInstance().getMouseButtonCallBack());
-        glfwSetScrollCallback(glfwWindow, MouseListener.getInstance().getMouseScrollCallBackWrapper());
-        glfwSetKeyCallback(glfwWindow, KeyListener.getInstance());
+        glfwSetCursorPosCallback(glfwWindow, MouseListener::mousePosCallback);
+        glfwSetMouseButtonCallback(glfwWindow, MouseListener::mouseButtonCallback);
+        glfwSetScrollCallback(glfwWindow, MouseListener::mouseScrollCallBack);
+        glfwSetKeyCallback(glfwWindow, KeyListener::keyCallBack);
 
         // Make the OpenGL context current
         glfwMakeContextCurrent(glfwWindow);

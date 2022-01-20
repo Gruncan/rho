@@ -1,23 +1,19 @@
 package net.rho.core;
 
-import org.lwjgl.glfw.GLFWCursorPosCallbackI;
-import org.lwjgl.glfw.GLFWMouseButtonCallbackI;
-import org.lwjgl.glfw.GLFWScrollCallbackI;
-
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
+
+/**
+ * Old version of MouseListener,
+ * removed weird static usage in singleton
+ */
 public class MouseListener {
 
-    private final boolean[] mouseButtonPressed = new boolean[3];
-    private final MousePosCallBackWrapper mousePosCallBackWrapper;
-    private final MouseButtonCallbackWrapper mouseButtonCallbackWrapper;
-    private final MouseScrollCallBackWrapper mouseScrollCallBackWrapper;
-    private double xPos, yPos, lastY, lastX, scrollX, scrollY;
-    private boolean isDragging;
-
-
     private static MouseListener inst = null;
+    private double xPos, yPos, lastY, lastX, scrollX, scrollY;
+    private boolean mouseButtonPressed[] = new boolean[3];
+    private boolean isDragging;
 
 
     private MouseListener() {
@@ -27,11 +23,6 @@ public class MouseListener {
         this.lastX = 0d;
         this.scrollX = 0d;
         this.scrollY = 0d;
-
-        this.mousePosCallBackWrapper = new MousePosCallBackWrapper();
-        this.mouseButtonCallbackWrapper = new MouseButtonCallbackWrapper();
-        this.mouseScrollCallBackWrapper = new MouseScrollCallBackWrapper();
-
 
     }
 
@@ -43,100 +34,86 @@ public class MouseListener {
     }
 
 
-    public MousePosCallBackWrapper getMousePosCallBack() {
-        return this.mousePosCallBackWrapper;
+    public static void mousePosCallback(long window, double xPos, double yPos) {
+        getInstance();
+        inst.lastX = inst.xPos;
+        inst.lastY = inst.yPos;
+        inst.xPos = xPos;
+        inst.yPos = yPos;
+        inst.isDragging = inst.mouseButtonPressed[0] || inst.mouseButtonPressed[1] || inst.mouseButtonPressed[2];
     }
 
-    public MouseButtonCallbackWrapper getMouseButtonCallBack() {
-        return this.mouseButtonCallbackWrapper;
+    public static void mouseButtonCallback(long window, int button, int action, int mods) {
+        getInstance();
+        if (button >= inst.mouseButtonPressed.length) {
+            // do nothing
+            assert true;
+        } else if (action == GLFW_PRESS) {
+            inst.mouseButtonPressed[button] = true;
+        } else if (action == GLFW_RELEASE) {
+            inst.mouseButtonPressed[button] = false;
+            inst.isDragging = false;
+        }
     }
 
-    public MouseScrollCallBackWrapper getMouseScrollCallBackWrapper() {
-        return this.mouseScrollCallBackWrapper;
+    public static void mouseScrollCallBack(long window, double xOffSet, double yOffSet) {
+        getInstance();
+        inst.scrollX = xOffSet;
+        inst.scrollY = yOffSet;
     }
 
-
-    public float getX() {
-        return ((float) this.xPos);
+    public static void endFrame() {
+        getInstance();
+        inst.scrollX = 0d;
+        inst.scrollY = 0d;
+        inst.lastX = inst.xPos;
+        inst.lastY = inst.yPos;
     }
 
-    public float getY() {
-        return ((float) this.yPos);
+    public static float getX() {
+        getInstance();
+        return ((float) inst.xPos);
     }
 
-    public float getDx() {
-        return ((float) (this.lastX - this.xPos));
+    public static float getY() {
+        getInstance();
+        return ((float) inst.yPos);
     }
 
-    public float getDy() {
-        return ((float) (this.lastY - this.yPos));
+    public static float getDx() {
+        getInstance();
+        return ((float) (inst.lastX - inst.xPos));
     }
 
-    public float getScrollX() {
-        return ((float) this.scrollX);
+    public static float getDy() {
+        getInstance();
+        return ((float) (inst.lastY - inst.yPos));
     }
 
-    public float getScrollY() {
-        return ((float) this.scrollY);
+    public static float getScrollX() {
+        getInstance();
+        return ((float) inst.scrollX);
     }
 
-    public boolean isDragging() {
-        return this.isDragging;
+    public static float getScrollY() {
+        getInstance();
+        return ((float) inst.scrollY);
     }
 
-    public boolean mouseButtonDown(int button) {
-        if (button < this.mouseButtonPressed.length) {
-            return this.mouseButtonPressed[button];
+    public static boolean isDragging() {
+        getInstance();
+        return inst.isDragging;
+    }
+
+    public static boolean mouseButtonDown(int button) {
+        getInstance();
+        if (button < inst.mouseButtonPressed.length) {
+            return inst.mouseButtonPressed[button];
         } else {
             return false;
         }
     }
 
-    public void endFrame() {
-        this.scrollX = 0d;
-        this.scrollY = 0d;
-        this.lastX = this.xPos;
-        this.lastY = this.yPos;
-    }
-
-
-    private class MousePosCallBackWrapper implements GLFWCursorPosCallbackI {
-
-        @Override
-        public void invoke(long window, double xpos, double ypos) {
-            lastX = xPos;
-            lastY = yPos;
-            xPos = xpos;
-            yPos = ypos;
-            isDragging = mouseButtonPressed[0] || mouseButtonPressed[1] || mouseButtonPressed[2];
-        }
-    }
-
-
-    private class MouseButtonCallbackWrapper implements GLFWMouseButtonCallbackI {
-
-        @Override
-        public void invoke(long window, int button, int action, int mods) {
-            if (button >= mouseButtonPressed.length) {
-                // do nothing
-                assert true;
-            } else if (action == GLFW_PRESS) {
-                mouseButtonPressed[button] = true;
-            } else if (action == GLFW_RELEASE) {
-                mouseButtonPressed[button] = false;
-                isDragging = false;
-            }
-        }
-    }
-
-    private class MouseScrollCallBackWrapper implements GLFWScrollCallbackI {
-
-        @Override
-        public void invoke(long window, double xoffset, double yoffset) {
-            scrollX = xoffset;
-            scrollY = yoffset;
-        }
-    }
-
 
 }
+
