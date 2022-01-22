@@ -1,8 +1,8 @@
 package net.rho.core;
 
 import net.rho.renderer.Shader;
+import net.rho.renderer.ShaderUtil;
 import net.rho.renderer.Texture;
-import net.rho.renderer.components.ShaderHelper;
 import net.rho.renderer.components.Vertex;
 import net.rho.renderer.components.VertexArray;
 import net.rho.util.Time;
@@ -11,6 +11,7 @@ import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+import java.nio.file.Paths;
 
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
@@ -52,7 +53,7 @@ public class LevelEditorScene extends Scene {
     @Override
     public void init() {
         super.camera = new Camera(new Vector2f());
-        defaultShader = new Shader("assets/shaders/default.glsl");
+        defaultShader = ShaderUtil.loadShaderFromFile(Paths.get("assets/shaders/default.glsl"));
         defaultShader.compile();
         this.testTexture = new Texture("assets/images/testImage.png");
 
@@ -77,7 +78,7 @@ public class LevelEditorScene extends Scene {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboID);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, elementBuffer, GL_STATIC_DRAW);
 
-        ShaderHelper.loadVertexes(vertexArray);
+        ShaderUtil.loadVertexes(vertexArray);
 
     }
 

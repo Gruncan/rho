@@ -3,10 +3,7 @@ package net.rho.renderer;
 import org.joml.*;
 import org.lwjgl.BufferUtils;
 
-import java.io.IOException;
 import java.nio.FloatBuffer;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import static org.lwjgl.opengl.GL11.GL_FALSE;
 import static org.lwjgl.opengl.GL20.*;
@@ -21,44 +18,10 @@ public class Shader {
     private String fragmentSource;
     private String filepath;
 
-    public Shader(String filepath) {
+    protected Shader(String fragmentSource, String vertexSource, String filepath) {
         this.filepath = filepath;
-        try {
-            String source = new String(Files.readAllBytes(Paths.get(filepath)));
-            String[] splitString = source.split("(#type)( )+([a-zA-Z]+)");
-
-            int index = source.indexOf("#type") + 6;
-            int eol = source.indexOf("\r\n", index);
-            String firstPattern = source.substring(index, eol).trim();
-
-            index = source.indexOf("#type", eol) + 6;
-            eol = source.indexOf("\r\n", index);
-            String secondPattern = source.substring(index, eol).trim();
-
-            if (firstPattern.equals("vertex")) {
-                vertexSource = splitString[1];
-            } else if (firstPattern.equals("fragment")) {
-                fragmentSource = splitString[1];
-            } else {
-                throw new IOException(String.format("Unexpected token '%s'", firstPattern));
-            }
-
-            if (secondPattern.equals("vertex")) {
-                vertexSource = splitString[2];
-            } else if (secondPattern.equals("fragment")) {
-                fragmentSource = splitString[2];
-            } else {
-                throw new IOException(String.format("Unexpected token '%s'", secondPattern));
-            }
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            assert false : String.format("Error: Could not open file for shader: '%s'", this.filepath);
-        }
-
-        System.out.println(vertexSource);
-        System.out.println(fragmentSource);
+        this.vertexSource = vertexSource;
+        this.fragmentSource = fragmentSource;
 
     }
 
