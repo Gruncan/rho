@@ -1,5 +1,7 @@
 package net.rho.core;
 
+import net.rho.components.FontRenderer;
+import net.rho.components.SpriteRenderer;
 import net.rho.renderer.Shader;
 import net.rho.renderer.Texture;
 import net.rho.util.Time;
@@ -31,10 +33,12 @@ public class LevelEditorScene extends Scene {
             0, 1, 3, // Bottom left triangle
     };
 
+    private boolean firstTime = true;
 
     private int vaoID, vboID, eboID;
     private Shader defaultShader;
     private Texture testTexture;
+    GameObject testObj;
 
     public LevelEditorScene() {
 
@@ -43,6 +47,13 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void init() {
+        System.out.println("Creating 'Test object'");
+        this.testObj = new GameObject("Test object");
+        this.testObj.addComponent(new SpriteRenderer());
+        this.testObj.addComponent(new FontRenderer());
+        this.addGameObjectToScene(this.testObj);
+
+
         super.camera = new Camera(new Vector2f());
         defaultShader = new Shader("assets/shaders/default.glsl");
         defaultShader.compile();
@@ -117,6 +128,18 @@ public class LevelEditorScene extends Scene {
         glBindVertexArray(0);
 
         defaultShader.detach();
+
+        if (this.firstTime) {
+            System.out.println("Creating game object");
+            GameObject gameObject = new GameObject("Game Test 2");
+            gameObject.addComponent(new SpriteRenderer());
+            this.addGameObjectToScene(gameObject);
+            this.firstTime = false;
+        }
+
+        for (GameObject gameObject : super.gameObjects) {
+            gameObject.update(dt);
+        }
 
 
     }
