@@ -1,19 +1,24 @@
 package net.rho.core;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class GameObject {
 
     private final String name;
     private final Map<Class<? extends Component>, Component> components;
+    public Transform transform;
 
     public GameObject(String name){
+        this(name, new Transform());
+    }
+
+    public GameObject(String name, Transform transform){
         this.name = name;
         this.components = new HashMap<>();
+        this.transform = transform;
     }
+
 
     public <T extends Component> T getComponent(Class<T> componentClass){
         return componentClass.cast(this.components.get(componentClass));
