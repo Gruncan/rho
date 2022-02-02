@@ -132,6 +132,12 @@ public class Window {
 
     }
 
+
+    public static Scene getCurrentScene(){
+        return currentScene;
+    }
+
+
     public void loop() {
         float beginTime = Time.getTime();
         float endTime;
