@@ -1,5 +1,6 @@
-package net.rho.renderer;
+package net.rho.util;
 
+import net.rho.renderer.Shader;
 import net.rho.renderer.components.VertexArray;
 
 import java.io.IOException;

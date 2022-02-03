@@ -18,7 +18,7 @@ public class Shader {
     private final String fragmentSource;
     private final String filepath;
 
-    protected Shader(String fragmentSource, String vertexSource, String filepath) {
+    public Shader(String fragmentSource, String vertexSource, String filepath) {
         this.filepath = filepath;
         this.vertexSource = vertexSource;
         this.fragmentSource = fragmentSource;
