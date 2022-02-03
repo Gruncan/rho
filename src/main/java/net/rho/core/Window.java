@@ -1,6 +1,5 @@
 package net.rho.core;
 
-import net.rho.util.Time;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
@@ -126,13 +125,12 @@ public class Window {
         glfwSwapInterval(1);
 
 
-        //Make the window visable
+        //Make the window visible
         glfwShowWindow(glfwWindow);
 
 
         // Ensures we can use the bindings, IMPORTANT!!!
         GL.createCapabilities();
-
 
         this.changeScene(0);
 
@@ -140,7 +138,7 @@ public class Window {
     }
 
     private void loop() {
-        float beginTime = Time.getTime();
+        float beginTime = ((float) glfwGetTime());
         float endTime;
         float dt = -1f;
 
@@ -158,7 +156,7 @@ public class Window {
 
             glfwSwapBuffers(glfwWindow);
 
-            endTime = Time.getTime();
+            endTime = ((float) glfwGetTime());
             dt = endTime - beginTime;
             beginTime = endTime;
         }

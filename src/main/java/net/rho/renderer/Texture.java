@@ -4,10 +4,10 @@ import org.lwjgl.BufferUtils;
 
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+import java.util.Objects;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.stb.STBImage.stbi_image_free;
-import static org.lwjgl.stb.STBImage.stbi_load;
+import static org.lwjgl.stb.STBImage.*;
 
 public class Texture {
 
@@ -34,6 +34,7 @@ public class Texture {
         IntBuffer width = BufferUtils.createIntBuffer(1);
         IntBuffer height = BufferUtils.createIntBuffer(1);
         IntBuffer channels = BufferUtils.createIntBuffer(1);
+        stbi_set_flip_vertically_on_load(true);
         ByteBuffer image = stbi_load(filepath, width, height, channels, 0);
 
 
@@ -66,6 +67,20 @@ public class Texture {
         glBindTexture(GL_TEXTURE_2D, 0);
     }
 
+    public String getName(){
+        return this.filepath;
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Texture texture = (Texture) o;
+        return texID == texture.texID && Objects.equals(filepath, texture.filepath);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(filepath, texID);
+    }
 }
