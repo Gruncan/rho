@@ -1,6 +1,7 @@
 package net.rho.core;
 
 import net.rho.components.SpriteRenderer;
+import net.rho.util.AssetPool;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -15,6 +16,7 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void init() {
+
         this.camera = new Camera(new Vector2f());
 
         int xOffSet = 10;
@@ -36,12 +38,17 @@ public class LevelEditorScene extends Scene {
                 this.addGameObjectToScene(gameObject);
             }
         }
+        loadResources();
 
+    }
+
+
+    private void loadResources(){
+        AssetPool.getShader("assets/shaders/default.glsl");
     }
 
     @Override
     public void update(float dt) {
-        System.out.printf("FPS: %f%n", 1/dt);
         for (GameObject gameObject : super.gameObjects) {
             gameObject.update(dt);
         }

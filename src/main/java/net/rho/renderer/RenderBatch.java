@@ -2,6 +2,7 @@ package net.rho.renderer;
 
 import net.rho.components.SpriteRenderer;
 import net.rho.core.Window;
+import net.rho.util.AssetPool;
 import org.joml.Vector4f;
 
 import static org.lwjgl.opengl.GL15.*;
@@ -37,9 +38,7 @@ public class RenderBatch {
 
 
     public RenderBatch(int maxBatchSize){
-        this.shader = new Shader("assets/shaders/default.glsl");
-        this.shader.compile();
-
+        this.shader = AssetPool.getShader("assets/shaders/default.glsl");
         this.sprites = new SpriteRenderer[maxBatchSize];
         this.maxBatchSize = maxBatchSize;
 
