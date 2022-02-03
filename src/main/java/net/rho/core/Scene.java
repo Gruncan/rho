@@ -11,16 +11,17 @@ public abstract class Scene {
     private boolean isRunning;
     protected final List<GameObject> gameObjects;
     protected Renderer renderer = new Renderer();
+    private final String name;
 
-    public Scene() {
+    public Scene(String name) {
         this.isRunning = false;
         this.gameObjects = new ArrayList<>();
-    }
-
-
-    public void init() {
+        this.name = name;
 
     }
+
+
+    public abstract void init();
 
 
     public void start(){
@@ -47,6 +48,10 @@ public abstract class Scene {
     public Camera camera(){
         return this.camera;
     }
+
+
+
+
 
 
 }

@@ -1,14 +1,17 @@
-package net.rho.core;
+package testgame;
 
 import net.rho.components.SpriteRenderer;
+import net.rho.core.Camera;
+import net.rho.core.GameObject;
+import net.rho.core.Scene;
+import net.rho.core.Transform;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
-public class LevelEditorScene extends Scene {
+public class GameScene extends Scene {
 
-
-
-    public LevelEditorScene() {
+    public GameScene() {
+        super("GameScene");
 
     }
 
@@ -32,16 +35,14 @@ public class LevelEditorScene extends Scene {
                 float yPos = yOffSet + (y * sizeY);
 
                 GameObject gameObject = new GameObject("Obj"+x+""+y, new Transform(new Vector2f(xPos, yPos), new Vector2f(sizeX, sizeY)));
-                gameObject.addComponent(new SpriteRenderer(new Vector4f(xPos / totalWidth, yPos / totalWidth, 1, 1)));
+                gameObject.addComponent(new SpriteRenderer(new Vector4f(xPos / totalWidth, yPos / totalWidth, 0.5f, 1)));
                 this.addGameObjectToScene(gameObject);
             }
         }
-
     }
 
     @Override
     public void update(float dt) {
-        System.out.printf("FPS: %f%n", 1/dt);
         for (GameObject gameObject : super.gameObjects) {
             gameObject.update(dt);
         }

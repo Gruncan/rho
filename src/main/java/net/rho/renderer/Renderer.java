@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Renderer {
 
-    private final static int MAX_BATCH_SIZE = 1;
+    private final static int MAX_BATCH_SIZE = 1000;
     private final List<RenderBatch> batches;
     private RenderBatch availableBatch;
 
@@ -25,6 +25,8 @@ public class Renderer {
         }
     }
 
+    // Only is better if vertexes can't be removed from render batch
+    // if so then wasting space, will need changed.
     private void add(SpriteRenderer sprite){
         if (this.availableBatch == null){
             RenderBatch newBatch = new RenderBatch(MAX_BATCH_SIZE);
