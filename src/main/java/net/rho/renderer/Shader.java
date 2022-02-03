@@ -14,9 +14,9 @@ public class Shader {
     private int shaderProgramID;
     private boolean beingUsed = false;
 
-    private String vertexSource;
-    private String fragmentSource;
-    private String filepath;
+    private final String vertexSource;
+    private final String fragmentSource;
+    private final String filepath;
 
     protected Shader(String fragmentSource, String vertexSource, String filepath) {
         this.filepath = filepath;

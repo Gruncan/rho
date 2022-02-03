@@ -19,7 +19,7 @@ public class Window {
     private final String title;
     protected float r, g, b;
     private long glfwWindow = 0;
-    private boolean fadeToBlack = false;
+
 
 
     private Window() {

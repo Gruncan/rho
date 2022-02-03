@@ -21,11 +21,4 @@ public class Transform {
         this.position = position;
         this.scale = scale;
     }
-
-//    public void init(Vector2f position, Vector2f scale){
-//        this.position = position;
-//        this.scale = scale;
-//    }
-
-
 }

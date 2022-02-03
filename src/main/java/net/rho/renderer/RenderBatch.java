@@ -28,7 +28,7 @@ public class RenderBatch {
 
 
 
-    private SpriteRenderer[] sprites;
+    private final SpriteRenderer[] sprites;
     private int numSprites;
     private boolean hasRoom;
     private final float[] vertices;
@@ -103,6 +103,7 @@ public class RenderBatch {
         Vector4f color = sprite.getColor();
 
         // Add vertex
+        // Improve this TODO
         float xAdd = 1f;
         float yAdd = 1f;
         for (int i = 0; i < 4; i++) {
