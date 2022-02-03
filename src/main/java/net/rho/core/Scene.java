@@ -1,6 +1,7 @@
 package net.rho.core;
 
 import net.rho.renderer.Renderer;
+import net.rho.util.AssetPool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,10 +50,9 @@ public abstract class Scene {
         return this.camera;
     }
 
-
-
-
-
+    protected void loadResources(){
+        AssetPool.getShader("assets/shaders/default.glsl");
+    }
 
 }
 

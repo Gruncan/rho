@@ -80,7 +80,7 @@ public class Shader {
 
     }
 
-    public void use() {
+    protected void use() {
         if (!this.beingUsed) {
             // Bind shader program
             glUseProgram(shaderProgramID);
@@ -88,7 +88,7 @@ public class Shader {
         }
     }
 
-    public void detach() {
+    protected void detach() {
         glUseProgram(0);
         this.beingUsed = false;
     }

@@ -6,8 +6,6 @@ public class FontRenderer extends Component {
 
 
 
-
-
     @Override
     public void start() {
         if (super.gameObject.getComponent(SpriteRenderer.class) != null){

@@ -154,6 +154,7 @@ public class Window {
                 currentScene.update(dt);
 
 
+
             glfwSwapBuffers(glfwWindow);
 
             endTime = ((float) glfwGetTime());

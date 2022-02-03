@@ -11,7 +11,12 @@ public class Main {
 
 
         window.addScene(0, new GameScene());
+        window.addScene(1, new GameTestScene("Test Scene"));
+
         window.run();
+
+
+
     }
 
 

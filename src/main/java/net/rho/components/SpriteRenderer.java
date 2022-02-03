@@ -9,6 +9,7 @@ import org.joml.Vector4f;
 public class SpriteRenderer extends Component {
 
     private final Vector4f color;
+    // to be udpated
     private final Vector2f[] texCoords = null;
     private final Texture texture;
 

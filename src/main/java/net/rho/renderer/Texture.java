@@ -59,11 +59,11 @@ public class Texture {
     }
 
 
-    public void bind(){
+    protected void bind(){
         glBindTexture(GL_TEXTURE_2D, texID);
     }
 
-    public void unbind(){
+    protected void unbind(){
         glBindTexture(GL_TEXTURE_2D, 0);
     }
 
