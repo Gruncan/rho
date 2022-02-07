@@ -1,5 +1,6 @@
 package net.rho.util;
 
+import net.rho.components.SpriteSheet;
 import net.rho.renderer.Shader;
 import net.rho.renderer.Texture;
 
@@ -12,6 +13,7 @@ public class AssetPool {
 
     private final static Map<String, Shader> shaders = new HashMap<>();
     private final static Map<String, Texture> textures = new HashMap<>();
+    private final static Map<String, SpriteSheet> spriteSheets = new HashMap<>();
 
 
 
@@ -36,6 +38,21 @@ public class AssetPool {
             textures.put(file.getAbsolutePath(), texture);
             return texture;
         }
+    }
+
+
+    public static void addSpriteSheet(String resourceName, SpriteSheet spriteSheet){
+        File file = new File(resourceName);
+        spriteSheets.putIfAbsent(file.getAbsolutePath(), spriteSheet);
+    }
+
+    public static SpriteSheet getSpriteSheet(String resourceName){
+        File file = new File(resourceName);
+        if (!spriteSheets.containsKey(file.getAbsolutePath())){
+            throw new IllegalArgumentException("Can't find required spritesheet.");
+        }
+        // add default spritesheet
+        return spriteSheets.get(file.getAbsolutePath());
     }
 
 

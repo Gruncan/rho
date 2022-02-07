@@ -1,6 +1,7 @@
 package testgame;
 
 import net.rho.components.SpriteRenderer;
+import net.rho.components.SpriteSheet;
 import net.rho.core.*;
 import net.rho.util.AssetPool;
 import org.joml.Vector2f;
@@ -17,21 +18,25 @@ public class GameScene extends Scene {
 
     @Override
     public void init() {
+        loadResources();
+
 
         this.camera = new Camera(new Vector2f(-250, 0));
 
+
+        SpriteSheet spriteSheet = AssetPool.getSpriteSheet("assets/images/spritesheet.png");
+
         GameObject obj1 = new GameObject("Object 1", new Transform(new Vector2f(100, 100), new Vector2f(256, 256)));
-        obj1.addComponent(new SpriteRenderer(AssetPool.getTexture("assets/images/testImage.png")));
+        obj1.addComponent(new SpriteRenderer(spriteSheet.getSprite(0)));
         this.addGameObjectToScene(obj1);
 
         GameObject obj2 = new GameObject("Object 2", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)));
-        obj2.addComponent(new SpriteRenderer(AssetPool.getTexture("assets/images/testImage2.png")));
+        obj2.addComponent(new SpriteRenderer(spriteSheet.getSprite(5)));
         this.addGameObjectToScene(obj2);
 
 
 
 
-        loadResources();
 
     }
 

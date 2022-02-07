@@ -27,20 +27,28 @@ public class Renderer {
 
     // Only is better if vertexes can't be removed from render batch
     // if so then wasting space, will need changed.
-    private void add(SpriteRenderer sprite){
+    private void add(final SpriteRenderer sprite){
         if (this.availableBatch == null){
             RenderBatch newBatch = new RenderBatch(MAX_BATCH_SIZE);
             newBatch.start();
 
             this.batches.add(newBatch);
-            newBatch.addSprite(sprite);
 
             this.availableBatch = newBatch;
+
+            this.addSpriteTexture(sprite);
+
         }else if(!this.availableBatch.hasRoom()){
             this.availableBatch = null;
             // create new batch
             this.add(sprite);
         }else{
+            this.addSpriteTexture(sprite);
+        }
+    }
+    private void addSpriteTexture(final SpriteRenderer sprite){
+        Texture texture = sprite.getTexture();
+        if (texture == null || (this.availableBatch.hasTexture(texture) || this.availableBatch.hasTextureRoom())){
             this.availableBatch.addSprite(sprite);
         }
     }

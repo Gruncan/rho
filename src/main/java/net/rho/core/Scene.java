@@ -1,5 +1,6 @@
 package net.rho.core;
 
+import net.rho.components.SpriteSheet;
 import net.rho.renderer.Renderer;
 import net.rho.util.AssetPool;
 
@@ -52,6 +53,9 @@ public abstract class Scene {
 
     protected void loadResources(){
         AssetPool.getShader("assets/shaders/default.glsl");
+        AssetPool.addSpriteSheet("assets/images/spritesheet.png",
+                new SpriteSheet(AssetPool.getTexture("assets/images/spritesheet.png"),
+                        16, 16, 26, 0));
     }
 
 }
