@@ -12,6 +12,8 @@ public class Texture {
 
     private final String filepath;
     private final int texID;
+    private int width;
+    private int height;
 
 
     public Texture(String filepath){
@@ -38,6 +40,8 @@ public class Texture {
 
 
         if (image != null){
+            this.width = width.get(0);
+            this.height = height.get(0);
             // Uploads pixels to GPU
             if (channels.get(0) == 3){
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width.get(0), height.get(0),
@@ -66,6 +70,11 @@ public class Texture {
         glBindTexture(GL_TEXTURE_2D, 0);
     }
 
+    public int getWidth() {
+        return this.width;
+    }
 
-
+    public int getHeight() {
+        return this.height;
+    }
 }

@@ -27,9 +27,12 @@ public class Renderer {
         boolean added = false;
         for (RenderBatch renderBatch : this.batches) {
             if (renderBatch.hasRoom()){
-                renderBatch.addSprite(sprite);
-                added = true;
-                break;
+                Texture texture = sprite.getTexture();
+                if (texture == null || (renderBatch.hasTexture(texture) || renderBatch.hasTextureRoom())){
+                    renderBatch.addSprite(sprite);
+                    added = true;
+                    break;
+                }
             }
         }
 
