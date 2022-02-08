@@ -1,5 +1,6 @@
 package net.rho.core;
 
+import net.rho.core.gui.ImGuiLayer;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
@@ -22,7 +23,7 @@ public class Window {
     protected float r, g, b;
     private long glfwWindow = 0;
     private final Map<Integer, Scene> sceneMap;
-
+    private ImGuiLayer imGuiLayer;
 
 
     private Window() {
@@ -118,6 +119,10 @@ public class Window {
         glfwSetMouseButtonCallback(glfwWindow, MouseListener.getInstance().getMouseButtonCallBack());
         glfwSetScrollCallback(glfwWindow, MouseListener.getInstance().getMouseScrollCallBackWrapper());
         glfwSetKeyCallback(glfwWindow, KeyListener.getInstance());
+        glfwSetWindowSizeCallback(glfwWindow, (w, newWidth, newHeight) ->{
+            this.width = newWidth;
+            this.height = newHeight;
+        });
 
         // Make the OpenGL context current
         glfwMakeContextCurrent(glfwWindow);
@@ -131,6 +136,11 @@ public class Window {
 
         // Ensures we can use the bindings, IMPORTANT!!!
         GL.createCapabilities();
+
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+        this.imGuiLayer = new ImGuiLayer(glfwWindow);
+        this.imGuiLayer.initImGui();
 
         this.changeScene(0);
 
@@ -154,7 +164,7 @@ public class Window {
                 currentScene.update(dt);
 
 
-
+            this.imGuiLayer.update(dt);
             glfwSwapBuffers(glfwWindow);
 
             endTime = ((float) glfwGetTime());
@@ -168,5 +178,11 @@ public class Window {
         return currentScene;
     }
 
+    public int getWidth(){
+        return this.width;
+    }
+    public int getHeight(){
+        return this.height;
+    }
 
 }

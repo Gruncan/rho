@@ -37,11 +37,11 @@ public class GameScene extends Scene {
         this.spriteSheet = AssetPool.getSpriteSheet("assets/images/spritesheet.png");
 
 
-        this.obj1 = new GameObject("Object 1", new Transform(new Vector2f(100, 100), new Vector2f(256, 256)));
+        this.obj1 = new GameObject("Object 1", new Transform(new Vector2f(100, 100), new Vector2f(256, 256)), 1);
         this.obj1.addComponent(new SpriteRenderer(this.spriteSheet.getSprite(0)));
         this.addGameObjectToScene(this.obj1);
 
-        GameObject obj2 = new GameObject("Object 2", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)));
+        GameObject obj2 = new GameObject("Object 2", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)), 3);
         obj2.addComponent(new SpriteRenderer(this.spriteSheet.getSprite(5)));
         this.addGameObjectToScene(obj2);
 

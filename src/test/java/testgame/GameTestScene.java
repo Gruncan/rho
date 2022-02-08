@@ -34,7 +34,7 @@ public class GameTestScene extends Scene {
                 float xPos = xOffSet + (x * sizeX);
                 float yPos = yOffSet + (y * sizeY);
 
-                GameObject gameObject = new GameObject("Obj" + x + "" + y, new Transform(new Vector2f(xPos, yPos), new Vector2f(sizeX, sizeY)));
+                GameObject gameObject = new GameObject("Obj" + x + "" + y, new Transform(new Vector2f(xPos, yPos), new Vector2f(sizeX, sizeY)), 3);
                 gameObject.addComponent(new SpriteRenderer(new Vector4f(xPos / totalWidth, yPos / totalWidth, 0.2f, 1)));
                 this.addGameObjectToScene(gameObject);
             }

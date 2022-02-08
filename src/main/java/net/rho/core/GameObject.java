@@ -8,15 +8,17 @@ public class GameObject {
     private final String name;
     private final Map<Class<? extends Component>, Component> components;
     private final Transform transform;
+    private final int zIndex;
 
     public GameObject(String name){
-        this(name, new Transform());
+        this(name, new Transform(), 0);
     }
 
-    public GameObject(String name, Transform transform){
+    public GameObject(String name, Transform transform, int zIndex){
         this.name = name;
         this.components = new HashMap<>();
         this.transform = transform;
+        this.zIndex = zIndex;
     }
 
 
@@ -69,6 +71,10 @@ public class GameObject {
 
     public void moveX(float inc){
         this.transform.increaseX(inc);
+    }
+
+    public int getZIndex(){
+        return this.zIndex;
     }
 
 
