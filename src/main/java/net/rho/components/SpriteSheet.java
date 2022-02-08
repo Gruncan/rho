@@ -8,8 +8,8 @@ import java.util.List;
 
 public class SpriteSheet {
 
-    private Texture texture;
-    private List<Sprite> sprites;
+    private final Texture texture;
+    private final List<Sprite> sprites;
 
 
 
@@ -21,10 +21,10 @@ public class SpriteSheet {
         int currentY = texture.getHeight() - spriteHeight;
         // Normalising sprite locations
         for (int i = 0; i < numSprites; i++) {
-           float topY = (currentY + spriteHeight) / (float) texture.getHeight();
-           float rightX = (currentX + spriteWidth) / (float) texture.getWidth();
-           float leftX = currentX / (float) texture.getWidth();
-           float bottomY = currentY / (float) texture.getHeight();
+            float topY = (currentY + spriteHeight) / (float) texture.getHeight();
+            float rightX = (currentX + spriteWidth) / (float) texture.getWidth();
+            float leftX = currentX / (float) texture.getWidth();
+            float bottomY = currentY / (float) texture.getHeight();
 
             Vector2f[] texCoords = {
                     new Vector2f(rightX, topY),
@@ -45,7 +45,8 @@ public class SpriteSheet {
     }
 
 
-    public Sprite getSprite(int index){
+    public Sprite getSprite(final int index){
+        if (index > sprites.size()) return null;
         return this.sprites.get(index);
     }
 

@@ -2,11 +2,13 @@ package net.rho.core;
 
 import org.joml.Vector2f;
 
+import java.util.Objects;
+
 public class Transform {
 
 
-    public Vector2f position;
-    public Vector2f scale;
+    private final Vector2f position;
+    private final Vector2f scale;
 
     public Transform(){
         this(new Vector2f(), new Vector2f());
@@ -22,10 +24,47 @@ public class Transform {
         this.scale = scale;
     }
 
-//    public void init(Vector2f position, Vector2f scale){
-//        this.position = position;
-//        this.scale = scale;
-//    }
+    public float getXPos(){
+        return this.position.x;
+    }
 
+    public float getYPos(){
+        return this.position.y;
+    }
+
+    public float getXScale(){
+        return this.scale.x;
+    }
+
+    public float getYScale(){
+        return this.scale.y;
+    }
+
+    public Transform copy(){
+        return new Transform(new Vector2f(this.position), new Vector2f(this.scale));
+    }
+
+    public void copyTo(final Transform to){
+        to.position.set(this.position);
+        to.scale.set(this.scale);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Transform transform = (Transform) o;
+        return Objects.equals(position, transform.position) && Objects.equals(scale, transform.scale);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(position, scale);
+    }
+
+
+    public void increaseX(float inc){
+        this.position.x += inc;
+    }
 
 }

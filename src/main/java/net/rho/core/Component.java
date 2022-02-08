@@ -2,7 +2,7 @@ package net.rho.core;
 
 public abstract class Component {
 
-    public GameObject gameObject = null;
+    protected GameObject gameObject = null;
 
 
     public abstract void update(float dt);
@@ -10,4 +10,9 @@ public abstract class Component {
     public void start(){
 
     }
+
+    public GameObject getGameObject(){
+        return this.gameObject;
+    }
+
 }

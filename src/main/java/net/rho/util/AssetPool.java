@@ -5,6 +5,7 @@ import net.rho.renderer.Shader;
 import net.rho.renderer.Texture;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +22,7 @@ public class AssetPool {
         if (shaders.containsKey(file.getAbsolutePath())){
             return shaders.get(file.getAbsolutePath());
         }else{
-            Shader shader = new Shader(resourceName);
+            Shader shader = ShaderUtil.loadShaderFromFile(Path.of(resourceName));
             shader.compile();
             shaders.put(file.getAbsolutePath(), shader);
             return shader;
@@ -39,17 +40,16 @@ public class AssetPool {
         }
     }
 
+
     public static void addSpriteSheet(String resourceName, SpriteSheet spriteSheet){
         File file = new File(resourceName);
-        if (!spriteSheets.containsKey(file.getAbsolutePath())){
-           spriteSheets.put(file.getAbsolutePath(), spriteSheet);
-        }
+        spriteSheets.putIfAbsent(file.getAbsolutePath(), spriteSheet);
     }
 
     public static SpriteSheet getSpriteSheet(String resourceName){
         File file = new File(resourceName);
         if (!spriteSheets.containsKey(file.getAbsolutePath())){
-            assert false : String.format("Error: Tried to access spritesheet '%s' and it has not been added to assetpool", resourceName);
+            throw new IllegalArgumentException("Can't find required spritesheet.");
         }
         // add default spritesheet
         return spriteSheets.get(file.getAbsolutePath());

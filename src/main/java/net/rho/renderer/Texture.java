@@ -4,6 +4,7 @@ import org.lwjgl.BufferUtils;
 
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+import java.util.Objects;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.stb.STBImage.*;
@@ -12,8 +13,8 @@ public class Texture {
 
     private final String filepath;
     private final int texID;
-    private int width;
-    private int height;
+    private final int width;
+    private final int height;
 
 
     public Texture(String filepath){
@@ -55,6 +56,8 @@ public class Texture {
 
         }else{
             assert false : String.format("Error: Could not load image '%s'", this.filepath);
+            this.width = -1;
+            this.height = -1;
         }
 
         // free memory
@@ -62,13 +65,31 @@ public class Texture {
     }
 
 
-    public void bind(){
+    protected void bind(){
         glBindTexture(GL_TEXTURE_2D, texID);
     }
 
-    public void unbind(){
+    protected void unbind(){
         glBindTexture(GL_TEXTURE_2D, 0);
     }
+
+    public String getName(){
+        return this.filepath;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Texture texture = (Texture) o;
+        return texID == texture.texID && Objects.equals(filepath, texture.filepath);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(filepath, texID);
+    }
+
 
     public int getWidth() {
         return this.width;
@@ -77,4 +98,5 @@ public class Texture {
     public int getHeight() {
         return this.height;
     }
+
 }

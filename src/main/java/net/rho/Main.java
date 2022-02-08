@@ -6,7 +6,7 @@ public class Main {
 
 
     public static void main(String[] args) {
-        Window w = Window.get();
+        Window w = Window.getInstance();
         w.run();
     }
 }
