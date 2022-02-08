@@ -9,6 +9,4 @@ public class Main {
         Window w = Window.get();
         w.run();
     }
-
-
 }
