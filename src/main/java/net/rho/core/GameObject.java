@@ -62,6 +62,14 @@ public class GameObject {
         return this.transform.getYScale();
     }
 
+    public Transform getTransform(){
+        return this.transform.copy();
+    }
+
+
+    public void moveX(float inc){
+        this.transform.increaseX(inc);
+    }
 
 
 }

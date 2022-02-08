@@ -8,8 +8,8 @@ import java.util.List;
 
 public class SpriteSheet {
 
-    private Texture texture;
-    private List<Sprite> sprites;
+    private final Texture texture;
+    private final List<Sprite> sprites;
 
 
 
@@ -45,7 +45,8 @@ public class SpriteSheet {
     }
 
 
-    public Sprite getSprite(int index){
+    public Sprite getSprite(final int index){
+        if (index > sprites.size()) return null;
         return this.sprites.get(index);
     }
 

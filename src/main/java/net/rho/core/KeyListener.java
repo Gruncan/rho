@@ -9,7 +9,6 @@ public class KeyListener implements GLFWKeyCallbackI {
 
 
     private final boolean[] keyPressed = new boolean[350];
-
     private static KeyListener inst = null;
 
     private KeyListener() {
