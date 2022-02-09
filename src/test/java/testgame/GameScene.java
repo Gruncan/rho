@@ -1,5 +1,6 @@
 package testgame;
 
+import imgui.ImGui;
 import net.rho.components.SpriteRenderer;
 import net.rho.components.SpriteSheet;
 import net.rho.core.Camera;
@@ -8,6 +9,7 @@ import net.rho.core.Scene;
 import net.rho.core.Transform;
 import net.rho.util.AssetPool;
 import org.joml.Vector2f;
+import org.joml.Vector4f;
 
 public class GameScene extends Scene {
 
@@ -42,8 +44,9 @@ public class GameScene extends Scene {
         this.addGameObjectToScene(this.obj1);
 
         GameObject obj2 = new GameObject("Object 2", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)), 3);
-        obj2.addComponent(new SpriteRenderer(this.spriteSheet.getSprite(5)));
+        obj2.addComponent(new SpriteRenderer(new Vector4f(1, 0, 0, 1)));
         this.addGameObjectToScene(obj2);
+        this.activateGameObject = obj2;
 
 
 
@@ -70,7 +73,12 @@ public class GameScene extends Scene {
         }
 
         this.renderer.render();
+    }
 
-
+    @Override
+    public void imgui(){
+        ImGui.begin("Test Window");
+        ImGui.text("Some random text");
+        ImGui.end();
     }
 }

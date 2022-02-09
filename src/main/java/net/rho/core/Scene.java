@@ -1,5 +1,6 @@
 package net.rho.core;
 
+import imgui.ImGui;
 import net.rho.components.SpriteSheet;
 import net.rho.renderer.Renderer;
 import net.rho.util.AssetPool;
@@ -14,6 +15,7 @@ public abstract class Scene {
     protected final List<GameObject> gameObjects;
     protected Renderer renderer = new Renderer();
     private final String name;
+    protected GameObject activateGameObject = null;
 
     public Scene(String name) {
         this.isRunning = false;
@@ -56,6 +58,20 @@ public abstract class Scene {
         AssetPool.addSpriteSheet("assets/images/spritesheet.png",
                 new SpriteSheet(AssetPool.getTexture("assets/images/spritesheet.png"),
                         16, 16, 26, 0));
+    }
+
+    public void sceneImgui(){
+        if(activateGameObject != null){
+            ImGui.begin("Inspector");
+            activateGameObject.imgui();
+            ImGui.end();
+        }
+        this.imgui();
+    }
+
+    // TODO bad practice
+    public void imgui(){
+
     }
 
 }

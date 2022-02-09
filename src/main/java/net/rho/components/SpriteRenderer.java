@@ -1,6 +1,7 @@
 package net.rho.components;
 
 
+import imgui.ImGui;
 import net.rho.core.Component;
 import net.rho.core.Transform;
 import net.rho.renderer.Texture;
@@ -76,5 +77,12 @@ public class SpriteRenderer extends Component {
         this.isDirty = false;
     }
 
-
+    @Override
+    public void imgui() {
+        float[] imColor = {color.x, color.y, color.z, color.w};
+        if (ImGui.colorPicker4("Color picker", imColor)){
+            this.color.set(imColor[0],imColor[1], imColor[2], imColor[3]);
+            this.isDirty = true;
+        }
+    }
 }
