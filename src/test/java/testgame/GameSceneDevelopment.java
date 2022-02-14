@@ -1,5 +1,7 @@
 package testgame;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import imgui.ImGui;
 import net.rho.components.SpriteRenderer;
 import net.rho.components.SpriteSheet;
@@ -11,19 +13,18 @@ import net.rho.util.AssetPool;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
-public class GameScene extends Scene {
-
+public class GameSceneDevelopment extends Scene {
 
 
     private GameObject obj1;
     private int spriteIndex = 0;
     private float spriteFlipTime = 0.2f;
-    private float spriteFlipTimeLeft= 0f;
+    private float spriteFlipTimeLeft = 0f;
     private SpriteSheet spriteSheet;
 
 
-    public GameScene() {
-        super("GameScene");
+    public GameSceneDevelopment() {
+        super("GameSceneDevelopment");
 
     }
 
@@ -34,23 +35,28 @@ public class GameScene extends Scene {
 
 
         this.camera = new Camera(new Vector2f(-250, 0));
-
-
         this.spriteSheet = AssetPool.getSpriteSheet("assets/images/spritesheet.png");
 
 
         this.obj1 = new GameObject("Object 1", new Transform(new Vector2f(100, 100), new Vector2f(256, 256)), 1);
-        this.obj1.addComponent(new SpriteRenderer(this.spriteSheet.getSprite(0)));
+        SpriteRenderer obj1Sprite = new SpriteRenderer();
+        obj1Sprite.setSprite(this.spriteSheet.getSprite(0));
+        this.obj1.addComponent(obj1Sprite);
         this.addGameObjectToScene(this.obj1);
 
+
         GameObject obj2 = new GameObject("Object 2", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)), 3);
-        obj2.addComponent(new SpriteRenderer(new Vector4f(1, 0, 0, 1)));
+        SpriteRenderer obj2Sprite = new SpriteRenderer();
+        obj2Sprite.setColor(new Vector4f(1, 0, 0, 1));
+        obj2.addComponent(obj2Sprite);
         this.addGameObjectToScene(obj2);
         this.activateGameObject = obj2;
 
 
-
-
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting().create();
+        String s = gson.toJson(obj2Sprite);
+        System.out.println(s);
 
     }
 
@@ -75,7 +81,7 @@ public class GameScene extends Scene {
         this.renderer.render();
     }
 
-    @Override
+
     public void imgui(){
         ImGui.begin("Test Window");
         ImGui.text("Some random text");

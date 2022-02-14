@@ -1,0 +1,7 @@
+Elegant way for gson serialization.
+Sort Component classes blank implementation of methods.
+Elegant way for IMGUI.
+Clean up method structure.
+Improve renderer batch list, can be alot more efficient.
+GameObject shouldn't need to use generics use interfaces.
+Abstract more things using design patterns

@@ -1,5 +1,7 @@
 package net.rho.core;
 
+import net.rho.components.Component;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +12,7 @@ public class GameObject {
     private final Transform transform;
     private final int zIndex;
 
-    public GameObject(String name){
+    public GameObject(String name) {
         this(name, new Transform(), 0);
     }
 
@@ -33,7 +35,7 @@ public class GameObject {
 
     public void addComponent(Component c){
         this.components.put(c.getClass(), c);
-        c.gameObject = this;
+        c.setGameObject(this);
     }
 
     public void update(float dt){

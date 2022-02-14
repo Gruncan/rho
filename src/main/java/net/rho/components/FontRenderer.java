@@ -1,7 +1,5 @@
 package net.rho.components;
 
-import net.rho.core.Component;
-
 public class FontRenderer extends Component {
 
 

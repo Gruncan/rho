@@ -11,13 +11,18 @@ import static org.lwjgl.stb.STBImage.*;
 
 public class Texture {
 
-    private final String filepath;
-    private final int texID;
-    private final int width;
-    private final int height;
+    private String filepath;
+    private int texID;
+    private int width;
+    private int height;
 
 
-    public Texture(String filepath){
+    public Texture() {
+
+    }
+
+
+    public void init(String filepath) {
         this.filepath = filepath;
 
         // Generate texture on GPU

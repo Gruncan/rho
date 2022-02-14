@@ -2,7 +2,6 @@ package net.rho.components;
 
 
 import imgui.ImGui;
-import net.rho.core.Component;
 import net.rho.core.Transform;
 import net.rho.renderer.Texture;
 import org.joml.Vector2f;
@@ -10,23 +9,16 @@ import org.joml.Vector4f;
 
 public class SpriteRenderer extends Component {
 
-    private final Vector4f color;
-    private Sprite sprite;
+    private final Vector4f color = new Vector4f(1, 1, 1, 1);
+    private Sprite sprite = new Sprite();
 
-    private Transform lastTransform;
-    private boolean isDirty = true;
+    private transient Transform lastTransform;
+    private transient boolean isDirty = true;
 
 
-    public SpriteRenderer(Vector4f color){
-        this.color = color;
-        this.sprite = new Sprite(null);
+    public SpriteRenderer() {
+
     }
-
-    public SpriteRenderer(Sprite sprite) {
-        this.sprite = sprite;
-        this.color = new Vector4f(1, 1, 1, 1);
-    }
-
 
 
     @Override
@@ -77,7 +69,7 @@ public class SpriteRenderer extends Component {
         this.isDirty = false;
     }
 
-    @Override
+
     public void imgui() {
         float[] imColor = {color.x, color.y, color.z, color.w};
         if (ImGui.colorPicker4("Color picker", imColor)){
