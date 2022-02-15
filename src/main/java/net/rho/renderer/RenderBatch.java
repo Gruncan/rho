@@ -14,7 +14,7 @@ import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
-public class RenderBatch implements Comparable<RenderBatch> {
+public class RenderBatch implements Comparable<RenderBatch>, IBatch {
     // Vertex
     // ======
     // Pos               Color
@@ -69,7 +69,7 @@ public class RenderBatch implements Comparable<RenderBatch> {
 
     }
 
-
+    @Override
     public void start(){
         // Generate and bind Vertex array object#
         this.vaoID = glGenVertexArrays();
@@ -104,7 +104,8 @@ public class RenderBatch implements Comparable<RenderBatch> {
 
     }
 
-    public void addSprite(SpriteRenderer spr){
+    @Override
+    public void add(SpriteRenderer spr) {
         // Get index and add renderObject
         int index = this.numSprites;
         this.sprites[index] = spr;
@@ -124,6 +125,7 @@ public class RenderBatch implements Comparable<RenderBatch> {
     }
 
     // todo improve this
+    @Override
     public void render() {
         boolean rebufferData = false;
         for (int i = 0; i < numSprites; i++) {

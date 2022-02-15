@@ -1,6 +1,6 @@
 package net.rho.core;
 
-import net.rho.components.Component;
+import net.rho.components.AbstractComponent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +8,7 @@ import java.util.Map;
 public class GameObject {
 
     private final String name;
-    private final Map<Class<? extends Component>, Component> components;
+    private final Map<Class<? extends AbstractComponent>, AbstractComponent> components;
     private final Transform transform;
     private final int zIndex;
 
@@ -24,28 +24,28 @@ public class GameObject {
     }
 
 
-    public <T extends Component> T getComponent(Class<T> componentClass){
+    public <T extends AbstractComponent> T getComponent(Class<T> componentClass) {
         return componentClass.cast(this.components.get(componentClass));
     }
 
-    public <T extends Component> void removeComponent(Class<T> componentClass){
+    public <T extends AbstractComponent> void removeComponent(Class<T> componentClass) {
         this.components.remove(componentClass);
     }
 
 
-    public void addComponent(Component c){
+    public void addComponent(AbstractComponent c) {
         this.components.put(c.getClass(), c);
         c.setGameObject(this);
     }
 
-    public void update(float dt){
-        for (Component component : this.components.values()) {
-            component.update(dt);
+    public void update(float dt) {
+        for (AbstractComponent abstractComponent : this.components.values()) {
+            abstractComponent.update(dt);
         }
     }
-    public void start(){
-        for (Component component : this.components.values()) {
-            component.start();
+    public void start() {
+        for (AbstractComponent abstractComponent : this.components.values()) {
+            abstractComponent.start();
         }
     }
 
@@ -80,7 +80,7 @@ public class GameObject {
     }
 
     public void imgui(){
-        for (Component c : components.values()){
+        for (AbstractComponent c : components.values()) {
             c.imgui();
         }
     }

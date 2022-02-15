@@ -3,22 +3,17 @@ package net.rho.renderer;
 import net.rho.components.SpriteRenderer;
 import net.rho.core.GameObject;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeSet;
 
 public class Renderer {
 
-    private final static int MAX_BATCH_SIZE = 1000;
-    //private final Map<Integer, List<RenderBatch>> batches;
-    //private RenderBatch[] availableBatches;
-    private final List<RenderBatch> batches;
+    private final Map<Integer, BatchContainer> batches;
 
 
     public Renderer(){
-//        this.batches = new HashMap<>();
-//        this.availableBatches = new RenderBatch[5];
-        this.batches = new ArrayList<>();
+        this.batches = new HashMap<>();
     }
 
     public void add(GameObject go){
@@ -32,35 +27,37 @@ public class Renderer {
     // if so then wasting space, will need changed.
 
 
-
-
     private void add(SpriteRenderer sprite) {
-        boolean added = false;
-        for (RenderBatch batch : batches) {
-            if (batch.hasRoom() && batch.getZIndex() == sprite.getGameObject().getZIndex()) {
-                Texture tex = sprite.getTexture();
-                if (tex == null || (batch.hasTexture(tex) || batch.hasTextureRoom())) {
-                    batch.addSprite(sprite);
-                    added = true;
-                    break;
-                }
-            }
+
+        Integer z = sprite.getGameObject().getZIndex();
+        BatchContainer batchContainer = this.batches.get(z);
+
+        if (batchContainer == null) {
+            BatchContainer newContainer = new BatchContainer(z);
+            this.batches.put(z, newContainer);
+            newContainer.add(sprite);
+
+        } else {
+            batchContainer.add(sprite);
+
         }
 
-        if (!added) {
-            RenderBatch newBatch = new RenderBatch(MAX_BATCH_SIZE, sprite.getGameObject().getZIndex());
-            newBatch.start();
-            batches.add(newBatch);
-            newBatch.addSprite(sprite);
-            Collections.sort(batches);
-        }
     }
+
 
     public void render() {
-        for (RenderBatch batch : batches) {
-            batch.render();
+        TreeSet<Integer> zIndexes = new TreeSet<>(this.batches.keySet());
+        for (Integer i : zIndexes) {
+            BatchContainer batchContainer = this.batches.get(i);
+            batchContainer.render();
         }
+
     }
+
+
+
+
+
 }
 
 
