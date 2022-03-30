@@ -42,11 +42,17 @@ public class ShaderUtil {
             String[] splitString = source.split("(#type)( )+([a-zA-Z]+)");
 
             int index = source.indexOf("#type") + 6;
-            int eol = source.indexOf("\r\n", index);
+            String endLine = "\n";
+            if (System.getProperty("os.name").startsWith("Windows")) {
+                endLine = "\r\n";
+            } else if (System.getProperty("os.name").equals("Linux")) {
+                endLine = "\n";
+            }
+            int eol = source.indexOf(endLine, index);
             String firstPattern = source.substring(index, eol).trim();
 
             index = source.indexOf("#type", eol) + 6;
-            eol = source.indexOf("\r\n", index);
+            eol = source.indexOf(endLine, index);
             String secondPattern = source.substring(index, eol).trim();
 
             if (firstPattern.equals("vertex")) {

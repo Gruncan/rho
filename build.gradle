@@ -5,16 +5,29 @@ plugins {
 group 'net.rho'
 version '1.0-SNAPSHOT'
 
+import org.gradle.internal.os.OperatingSystem
+
 project.ext.lwjglVersion = "3.3.0"
 project.ext.jomlVersion = "1.10.3"
-project.ext.lwjglNatives = "natives-windows"
 project.ext.imguiVersion = '1.76-0.9'
+
+switch (OperatingSystem.current()) {
+    case OperatingSystem.LINUX:
+        project.ext.lwjglNatives = "natives-linux"
+        break
+    case OperatingSystem.MAC_OS:
+        project.ext.lwjglNatives = "natives-macos"
+        break
+    case OperatingSystem.WINDOWS:
+        project.ext.lwjglNatives = "natives-windows"
+        break
+}
+
 
 repositories {
     jcenter()
     mavenCentral()
 }
-
 
 
 dependencies {
@@ -24,9 +37,9 @@ dependencies {
 
     // Include all available natives, but it's likely that you want something specific
     runtimeOnly "io.imgui.java:natives-windows:$imguiVersion"
-//    runtimeOnly "io.imgui.java:natives-windows-x86:$imguiVersion"
-//    runtimeOnly "io.imgui.java:natives-linux:$imguiVersion"
-//    runtimeOnly "io.imgui.java:natives-linux-x86:$imguiVersion"
+    runtimeOnly "io.imgui.java:natives-windows-x86:$imguiVersion"
+    runtimeOnly "io.imgui.java:natives-linux:$imguiVersion"
+    runtimeOnly "io.imgui.java:natives-linux-x86:$imguiVersion"
 
 
     //LWJGL
