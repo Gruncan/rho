@@ -125,6 +125,12 @@ public abstract class Scene {
     }
 
 
+    @Override
+    public String toString() {
+        return this.name;
+    }
+
+
 }
 
 

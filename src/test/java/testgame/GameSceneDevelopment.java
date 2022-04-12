@@ -34,11 +34,14 @@ public class GameSceneDevelopment extends Scene {
 
         this.camera = new Camera(new Vector2f(-250, 0));
 
-        if (super.levelLoaded) {
-            return;
-        }
+        super.load();
 
         this.spriteSheet = AssetPool.getSpriteSheet("assets/images/spritesheet.png");
+        if (super.levelLoaded) {
+            this.activateGameObject = gameObjects.get(1);
+            this.obj1 = super.gameObjects.get(0);
+            return;
+        }
 
 
         this.obj1 = new GameObject("Object 1", new Transform(new Vector2f(100, 100), new Vector2f(256, 256)), 1);

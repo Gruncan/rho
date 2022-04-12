@@ -154,7 +154,7 @@ public class Window {
         float dt = -1f;
 
 
-        currentScene.load();
+        //currentScene.load();
 
 
         while (!glfwWindowShouldClose(glfwWindow)) {
