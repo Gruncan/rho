@@ -2,53 +2,71 @@ package net.rho.core;
 
 import net.rho.components.AbstractComponent;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameObject {
 
-    private final String name;
-    private final Map<Class<? extends AbstractComponent>, AbstractComponent> components;
-    private final Transform transform;
+    public Transform transform;
+    private String name;
+    private List<AbstractComponent> components;
     private final int zIndex;
 
     public GameObject(String name) {
-        this(name, new Transform(), 0);
-    }
-
-    public GameObject(String name, Transform transform, int zIndex){
         this.name = name;
-        this.components = new HashMap<>();
-        this.transform = transform;
+        this.components = new ArrayList<>();
+        this.transform = new Transform();
+        this.zIndex = 0;
+    }
+
+    public GameObject(String name, Transform transform, int zIndex) {
+        this.name = name;
         this.zIndex = zIndex;
+        this.components = new ArrayList<>();
+        this.transform = transform;
     }
 
+    public <T extends AbstractComponent> T getComponent(Class<T> AbstractComponentClass) {
+        for (AbstractComponent c : this.components) {
+            if (AbstractComponentClass.isAssignableFrom(c.getClass())) {
+                try {
+                    return AbstractComponentClass.cast(c);
+                } catch (ClassCastException e) {
+                    e.printStackTrace();
+                    assert false : "Error: Casting AbstractComponent.";
+                }
+            }
+        }
 
-    public <T extends AbstractComponent> T getComponent(Class<T> componentClass) {
-        return componentClass.cast(this.components.get(componentClass));
+        return null;
     }
 
-    public <T extends AbstractComponent> void removeComponent(Class<T> componentClass) {
-        this.components.remove(componentClass);
+    public <T extends AbstractComponent> void removeComponent(Class<T> AbstractComponentClass) {
+        for (int i = 0; i < this.components.size(); i++) {
+            AbstractComponent c = this.components.get(i);
+            if (AbstractComponentClass.isAssignableFrom(c.getClass())) {
+                this.components.remove(i);
+                return;
+            }
+        }
     }
-
 
     public void addComponent(AbstractComponent c) {
-        this.components.put(c.getClass(), c);
+        this.components.add(c);
         c.setGameObject(this);
     }
 
     public void update(float dt) {
-        for (AbstractComponent abstractComponent : this.components.values()) {
-            abstractComponent.update(dt);
-        }
-    }
-    public void start() {
-        for (AbstractComponent abstractComponent : this.components.values()) {
-            abstractComponent.start();
+        for (AbstractComponent component : this.components) {
+            component.update(dt);
         }
     }
 
+    public void start() {
+        for (AbstractComponent component : this.components) {
+            component.start();
+        }
+    }
 
     public float getXPos(){
         return this.transform.getXPos();
@@ -80,7 +98,7 @@ public class GameObject {
     }
 
     public void imgui(){
-        for (AbstractComponent c : components.values()) {
+        for (AbstractComponent c : this.components) {
             c.imgui();
         }
     }

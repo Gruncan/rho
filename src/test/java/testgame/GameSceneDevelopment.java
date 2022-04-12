@@ -1,7 +1,5 @@
 package testgame;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import imgui.ImGui;
 import net.rho.components.RigidBody;
 import net.rho.components.SpriteRenderer;
@@ -34,8 +32,12 @@ public class GameSceneDevelopment extends Scene {
     public void init() {
         loadResources();
 
-
         this.camera = new Camera(new Vector2f(-250, 0));
+
+        if (super.levelLoaded) {
+            return;
+        }
+
         this.spriteSheet = AssetPool.getSpriteSheet("assets/images/spritesheet.png");
 
 
@@ -54,11 +56,6 @@ public class GameSceneDevelopment extends Scene {
         this.addGameObjectToScene(obj2);
         this.activateGameObject = obj2;
 
-
-        Gson gson = new GsonBuilder()
-                .setPrettyPrinting().create();
-        String s = gson.toJson(obj2Sprite);
-        System.out.println(s);
 
     }
 

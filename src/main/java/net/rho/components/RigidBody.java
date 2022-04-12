@@ -12,4 +12,13 @@ public class RigidBody extends AbstractComponent {
     private float friction = 0.8f;
 
 
+    @Override
+    public void update(float dt) {
+
+    }
+
+    @Override
+    public void start() {
+
+    }
 }

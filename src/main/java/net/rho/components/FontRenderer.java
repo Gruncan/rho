@@ -12,6 +12,6 @@ public class FontRenderer extends AbstractComponent {
 
     @Override
     public void update(float dt) {
-
+        // To be implemented
     }
 }
