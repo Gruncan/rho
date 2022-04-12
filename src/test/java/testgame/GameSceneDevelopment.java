@@ -3,6 +3,7 @@ package testgame;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import imgui.ImGui;
+import net.rho.components.RigidBody;
 import net.rho.components.SpriteRenderer;
 import net.rho.components.SpriteSheet;
 import net.rho.core.Camera;
@@ -49,6 +50,7 @@ public class GameSceneDevelopment extends Scene {
         SpriteRenderer obj2Sprite = new SpriteRenderer();
         obj2Sprite.setColor(new Vector4f(1, 0, 0, 1));
         obj2.addComponent(obj2Sprite);
+        obj2.addComponent(new RigidBody());
         this.addGameObjectToScene(obj2);
         this.activateGameObject = obj2;
 

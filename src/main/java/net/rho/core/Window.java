@@ -77,7 +77,8 @@ public class Window {
     }
 
     public void run() {
-        System.out.printf("Hello LWJGL %s!%n", Version.getVersion());
+        System.out.printf("Running LWJGL version %s!%n", Version.getVersion());
+
 
         init();
         loop();
