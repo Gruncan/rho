@@ -21,9 +21,9 @@ public abstract class Scene {
     protected Camera camera;
     private boolean isRunning;
     protected final List<GameObject> gameObjects;
-    protected Renderer renderer = new Renderer();
+    protected Renderer renderer;
     private final String name;
-    protected GameObject activateGameObject = null;
+    protected GameObject activateGameObject;
     protected boolean levelLoaded = false;
 
 
@@ -31,7 +31,8 @@ public abstract class Scene {
         this.isRunning = false;
         this.gameObjects = new ArrayList<>();
         this.name = name;
-
+        this.renderer = new Renderer();
+        this.activateGameObject = null;
     }
 
 
