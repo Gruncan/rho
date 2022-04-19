@@ -9,10 +9,6 @@ import net.rho.components.SpriteSheet;
 import net.rho.renderer.Renderer;
 import net.rho.util.AssetPool;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,13 +89,7 @@ public abstract class Scene {
                 .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
                 .create();
 
-        try {
-            FileWriter writer = new FileWriter("level.txt");
-            writer.write(gson.toJson(this.gameObjects));
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        boolean suc = net.rho.util.FileWriter.write(gson.toJson(this.gameObjects), "level.txt");
     }
 
     public void load() {
@@ -110,13 +100,10 @@ public abstract class Scene {
                 .create();
 
         String inFile = "";
-        try {
-            inFile = new String(Files.readAllBytes(Paths.get("level.txt")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        inFile = net.rho.util.FileWriter.read("level.txt");
 
-        if (!inFile.equals("")) {
+
+        if (inFile != null && !inFile.equals("")) {
             GameObject[] objs = gson.fromJson(inFile, GameObject[].class);
             for (GameObject obj : objs) {
                 this.addGameObjectToScene(obj);

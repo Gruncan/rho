@@ -1,23 +1,33 @@
 package testgame;
 
-import java.util.HashSet;
-import java.util.TreeSet;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 public class TestLogic {
 
-    public static void main(String[] args) {
-        HashSet<Integer> test = new HashSet<>();
-        test.add(5);
-        test.add(2);
-        test.add(7);
-        test.add(3);
-        test.add(1);
+    public static void main(String[] args) throws IOException {
+//        String testText = "This is random text";
+//        File testfile = new File("testfile.txt");
+//        byte[] encodedText = Base64.getEncoder().encode(testText.getBytes(StandardCharsets.UTF_8) );
+//
+//        try (OutputStream stream = new FileOutputStream(testfile)) {
+//            stream.write(encodedText);
+//        }
+//
+//
 
-        TreeSet<Integer> zIndexes = new TreeSet<>(test);
 
-        for (Integer integer : zIndexes) {
-            System.out.println(integer);
-        }
+        File testfile = new File("testfile.txt");
+        InputStream stream = new FileInputStream(testfile);
+        byte[] bytes = stream.readAllBytes();
+        bytes = Base64.getDecoder().decode(bytes);
+        String readIn = new String(bytes, StandardCharsets.UTF_8);
+        System.out.println(readIn);
+
 
     }
 
