@@ -5,9 +5,6 @@ import net.rho.renderer.Shader;
 import net.rho.renderer.Texture;
 
 import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +18,7 @@ public class AssetPool {
 
 
     public static Shader getShader(String resourceName) {
-        File file = new File(resourceName);
+        File file = getResourceFile(resourceName);
 
         if (shaders.containsKey(file.getAbsolutePath())) {
             return shaders.get(file.getAbsolutePath());
@@ -35,7 +32,7 @@ public class AssetPool {
     }
 
     public static Texture getTexture(String resourceName){
-        File file = new File(resourceName);
+        File file = getResourceFile(resourceName);
         if (textures.containsKey(file.getAbsolutePath())){
             return textures.get(file.getAbsolutePath());
         }else{
@@ -47,18 +44,31 @@ public class AssetPool {
     }
 
 
-    public static void addSpriteSheet(String resourceName, SpriteSheet spriteSheet){
-        File file = new File(resourceName);
+    public static void addSpriteSheet(String resourceName, SpriteSheet spriteSheet) {
+        File file = getResourceFile(resourceName);
         spriteSheets.putIfAbsent(file.getAbsolutePath(), spriteSheet);
     }
 
-    public static SpriteSheet getSpriteSheet(String resourceName){
-        File file = new File(resourceName);
-        if (!spriteSheets.containsKey(file.getAbsolutePath())){
+    public static SpriteSheet getSpriteSheet(String resourceName) {
+        File file = getResourceFile(resourceName);
+        if (!spriteSheets.containsKey(file.getAbsolutePath())) {
             throw new IllegalArgumentException("Can't find required spritesheet.");
         }
         // add default spritesheet
         return spriteSheets.get(file.getAbsolutePath());
+    }
+
+
+    private static File getResourceFile(final String fileName) {
+        File url = new File(Thread.currentThread().getContextClassLoader().getResource("database.properties").getFile());
+
+
+        if (url == null) {
+            throw new IllegalArgumentException(fileName + " is not found 1");
+        }
+
+
+        return url;
     }
 
 

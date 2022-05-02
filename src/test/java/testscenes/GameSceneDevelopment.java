@@ -36,7 +36,7 @@ public class GameSceneDevelopment extends Scene {
 
         super.load();
 
-        this.spriteSheet = AssetPool.getSpriteSheet("assets/images/spritesheet.png");
+        this.spriteSheet = AssetPool.getSpriteSheet("/assets/images/spritesheet.png");
         if (super.levelLoaded) {
             this.activateGameObject = gameObjects.get(1);
             this.obj1 = super.gameObjects.get(0);
