@@ -46,7 +46,6 @@ public abstract class Scene {
 
     public void addGameObjectToScene(GameObject gameObject){
         gameObjects.add(gameObject);
-        if (isRunning) gameObject.start();
         if (isRunning){
             gameObject.start();
             this.renderer.add(gameObject);

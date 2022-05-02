@@ -1,6 +1,5 @@
-package testgame;
-
 import net.rho.core.Window;
+import testgame.SnakeScene;
 
 public class Main {
 
@@ -14,5 +13,4 @@ public class Main {
 
         window.run();
     }
-
 }

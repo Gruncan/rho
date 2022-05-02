@@ -23,16 +23,18 @@ public class Window {
     protected float r, g, b;
     private long glfwWindow = 0;
     private final Map<Integer, Scene> sceneMap;
-    private ImGuiLayer imGuiLayer;
+    private ImGuiLayer imGuiLayer = null;
+
+    private boolean imGuiEnable = false;
 
 
     private Window() {
         this.width = 1920;
         this.height = 1080;
         this.title = "Title";
-        this.r = 1f;
-        this.g = 1f;
-        this.b = 1f;
+        this.r = 0f;
+        this.g = 0f;
+        this.b = 0f;
         this.sceneMap = new HashMap<>();
     }
 
@@ -140,8 +142,10 @@ public class Window {
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-        this.imGuiLayer = new ImGuiLayer(glfwWindow);
-        this.imGuiLayer.initImGui();
+        if (this.imGuiEnable) {
+            this.imGuiLayer = new ImGuiLayer(glfwWindow);
+            this.imGuiLayer.initImGui();
+        }
 
         this.changeScene(0);
 
@@ -168,8 +172,10 @@ public class Window {
             if (dt >= 0)
                 currentScene.update(dt);
 
+            if (this.imGuiLayer != null)
+                this.imGuiLayer.update(dt, currentScene);
 
-            this.imGuiLayer.update(dt, currentScene);
+
             glfwSwapBuffers(glfwWindow);
 
             endTime = ((float) glfwGetTime());
