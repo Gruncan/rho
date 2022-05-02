@@ -5,7 +5,10 @@ import net.rho.renderer.Shader;
 import net.rho.renderer.Texture;
 
 import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,16 +20,18 @@ public class AssetPool {
 
 
 
-    public static Shader getShader(String resourceName){
+    public static Shader getShader(String resourceName) {
         File file = new File(resourceName);
-        if (shaders.containsKey(file.getAbsolutePath())){
+
+        if (shaders.containsKey(file.getAbsolutePath())) {
             return shaders.get(file.getAbsolutePath());
-        }else{
-            Shader shader = ShaderUtil.loadShaderFromFile(Path.of(resourceName));
+        } else {
+            Shader shader = ShaderUtil.loadShaderFromFile(Paths.get(resourceName));
             shader.compile();
             shaders.put(file.getAbsolutePath(), shader);
             return shader;
         }
+
     }
 
     public static Texture getTexture(String resourceName){

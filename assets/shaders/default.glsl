@@ -5,8 +5,6 @@ layout (location=1) in vec4 aColor;
 layout (location=2) in vec2 aTexCoords;
 layout (location=3) in float aTexId;
 
-
-
 uniform mat4 uProjection;
 uniform mat4 uView;
 
@@ -16,9 +14,9 @@ out float fTexId;
 
 
 
-
 void main(){
     fColor = aColor;
+
 
     fTexCoords = aTexCoords;
     fTexId = aTexId;
@@ -27,11 +25,8 @@ void main(){
 }
 
 
-
-
-#type fragment
-#version 330 core
-
+    #type fragment
+    #version 330 core
 
 in vec4 fColor;
 in vec2 fTexCoords;
@@ -41,7 +36,6 @@ in float fTexId;
 uniform sampler2D uTextures[8];
 
 out vec4 color;
-
 
 void main(){
     if (fTexId > 0) {

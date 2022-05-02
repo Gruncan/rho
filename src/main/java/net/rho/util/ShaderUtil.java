@@ -46,7 +46,7 @@ public class ShaderUtil {
             if (System.getProperty("os.name").startsWith("Windows")) {
                 endLine = "\r\n";
             } else if (System.getProperty("os.name").equals("Linux")) {
-                endLine = "\r\n";
+                endLine = "\n";
             }
             int eol = source.indexOf(endLine, index);
             String firstPattern = source.substring(index, eol).trim();

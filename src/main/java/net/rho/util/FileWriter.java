@@ -23,16 +23,16 @@ public class FileWriter {
     }
 
     public static String read(String filePath) {
-        File testfile = new File(filePath);
-        String s = null;
-        try (InputStream stream = new FileInputStream(testfile)) {
-            byte[] bytes = stream.readAllBytes();
-            bytes = Base64.getDecoder().decode(bytes);
-            s = new String(bytes, StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return s;
+//        File testfile = new File(filePath);
+////        String s = null;
+////        try (InputStream stream = new FileInputStream(testfile)) {
+////            byte[] bytes = stream.readAllBytes();
+////            bytes = Base64.getDecoder().decode(bytes);
+////            s = new String(bytes, StandardCharsets.UTF_8);
+////        } catch (IOException e) {
+////            e.printStackTrace();
+////        }
+        return "";
     }
 
 

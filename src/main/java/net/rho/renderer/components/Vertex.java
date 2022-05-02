@@ -26,7 +26,7 @@ public class Vertex {
 
 
     public float[] getArray(){
-        return new float[]{this.pos.x, this.pos.y, this.pos.z, this.color.r(), this.color.g(), this.color.b(), this.color.a(), this.x, this.y};
+        return new float[]{this.pos.x, this.pos.y, this.pos.z, this.color.r, this.color.g, this.color.b, this.color.a, this.x, this.y};
     }
 
     public int getSize(){
