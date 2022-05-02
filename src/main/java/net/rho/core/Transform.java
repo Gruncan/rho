@@ -63,8 +63,18 @@ public class Transform {
     }
 
 
-    public void increaseX(float inc){
+    public void increaseX(float inc) {
         this.position.x += inc;
+    }
+
+    public void increaseY(float inc) {
+        this.position.y += inc;
+    }
+
+
+    public void setXY(float x, float y) {
+        this.position.x = x;
+        this.position.y = y;
     }
 
 }

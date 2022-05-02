@@ -1,4 +1,4 @@
-package testgame;
+package testscenes;
 
 import net.rho.core.GameObject;
 import net.rho.core.Scene;

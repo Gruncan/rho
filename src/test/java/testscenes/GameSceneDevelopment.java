@@ -1,4 +1,4 @@
-package testgame;
+package testscenes;
 
 import imgui.ImGui;
 import net.rho.components.RigidBody;

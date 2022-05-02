@@ -1,4 +1,4 @@
-package testgame;
+package testscenes;
 
 import net.rho.components.SpriteRenderer;
 import net.rho.core.*;
@@ -7,10 +7,10 @@ import org.joml.Vector4f;
 
 public class DrawingSceneTest extends Scene {
 
-    double x = 100;
-    double y = 100;
-    int count = 0;
-    int yOffSet = 0;
+    private final double x = 100;
+    private final double y = 100;
+    private int count = 0;
+    private int yOffSet = 0;
     private float drawTime = 0.2f;
 
 

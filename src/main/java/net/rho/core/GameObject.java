@@ -84,20 +84,25 @@ public class GameObject {
         return this.transform.getYScale();
     }
 
-    public Transform getTransform(){
+    public Transform getTransform() {
         return this.transform.copy();
     }
 
 
-    public void moveX(float inc){
+    public void moveX(float inc) {
         this.transform.increaseX(inc);
     }
 
-    public int getZIndex(){
+    public void moveY(float inc) {
+        this.transform.increaseY(inc);
+    }
+
+
+    public int getZIndex() {
         return this.zIndex;
     }
 
-    public void imgui(){
+    public void imgui() {
         for (AbstractComponent c : this.components) {
             c.imgui();
         }
