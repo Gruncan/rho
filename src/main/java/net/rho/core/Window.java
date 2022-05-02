@@ -95,6 +95,10 @@ public class Window {
 
     }
 
+    public void close() {
+        glfwDestroyWindow(glfwWindow);
+    }
+
     private void init() {
         // Setup an error callback
         GLFWErrorCallback.createPrint(System.err).set();

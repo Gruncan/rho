@@ -5,24 +5,21 @@ plugins {
 group 'net.rho'
 version '1.0-SNAPSHOT'
 
-
-import org.gradle.internal.os.OperatingSystem
-
 project.ext.lwjglVersion = "3.3.0"
 project.ext.jomlVersion = "1.10.3"
 project.ext.imguiVersion = '1.76-0.9'
 
-switch (OperatingSystem.current()) {
-    case OperatingSystem.LINUX:
-        project.ext.lwjglNatives = "natives-linux"
-        break
-    case OperatingSystem.MAC_OS:
-        project.ext.lwjglNatives = "natives-macos"
-        break
-    case OperatingSystem.WINDOWS:
-        project.ext.lwjglNatives = "natives-windows"
-        break
-}
+//switch (OperatingSystem.current()) {
+//    case OperatingSystem.LINUX:
+//        project.ext.lwjglNatives = "natives-linux"
+//        break
+//    case OperatingSystem.MAC_OS:
+//        project.ext.lwjglNatives = "natives-macos"
+//        break
+//    case OperatingSystem.WINDOWS:
+project.ext.lwjglNatives = "natives-windows"
+//        break
+//}
 
 
 repositories {
@@ -86,7 +83,6 @@ task fatJar(type: Jar) {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
     manifest.from jar.manifest
-    classifier = 'all'
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     } {

@@ -63,7 +63,7 @@ public class SnakeScene extends Scene {
     @Override
     public void update(float dt) {
 
-        System.out.println(snake);
+//        System.out.println(snake);
         this.timer += dt;
         if (this.timer > this.speed) {
             timer = 0;
@@ -71,6 +71,7 @@ public class SnakeScene extends Scene {
             if (this.snake.isCollided()) {
                 this.isOver = true;
                 System.out.println("Game is over");
+                Window.getInstance().close();
                 return;
             }
 

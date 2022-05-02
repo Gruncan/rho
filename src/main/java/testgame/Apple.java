@@ -20,7 +20,7 @@ public class Apple {
         do {
             y = random.nextInt(((650 - 100) / 15) * 15);
         } while (y % 15 != 0);
-        System.out.printf("(%s, %s)%n", x, y);
+//        System.out.printf("(%s, %s)%n", x, y);
         return new Transform(new Vector2f(x, y), new Vector2f(15, 15));
     }
 
